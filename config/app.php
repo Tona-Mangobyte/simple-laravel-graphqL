@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
+use Nuwave\Lighthouse\Pagination\PaginationServiceProvider;
+use Nuwave\Lighthouse\Validation\ValidationServiceProvider;
 
 return [
 
@@ -195,7 +197,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        MLL\GraphQLPlayground\GraphQLPlaygroundServiceProvider::class
+        MLL\GraphQLPlayground\GraphQLPlaygroundServiceProvider::class,
+        PaginationServiceProvider::class,
+        ValidationServiceProvider::class
     ],
 
     /*
