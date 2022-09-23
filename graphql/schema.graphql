@@ -1,5 +1,5 @@
-#scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
-#directive @upperCase on FIELD_DEFINITION
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+directive @paginate  on FIELD_DEFINITION
 
 type User {
   id: ID!
@@ -10,6 +10,7 @@ type Article {
     id: ID!
     title: String!
     content: String!
+    user_id: Int!
     author: User! @belongsTo(relation: "user")
 }
 
@@ -27,18 +28,15 @@ type Query {
     me: User
     users: [User!]!
     userById(id: ID): User
-}
 
-type Query {
     article(id: ID! @eq): Article @find
-    articles(first: Int!, page: Int): ArticlePaginator @paginate
-}
+    #articles(first: Int!, page: Int): ArticlePaginator @paginate
 
-type Query {
     greet(name: String = "Tona"): [String!]
     hello: [String!]
 }
 
 type Mutation {
-    createArticle(title: String!, content: String!, user_id: Int!): Article! @create
+    createArticle(title: String!, content: String!, user_id: Int!): Article!
+    createArticle2(title: String!, content: String!, user_id: Int!): Article! @create
 }

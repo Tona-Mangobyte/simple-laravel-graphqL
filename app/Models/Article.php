@@ -19,11 +19,15 @@ class Article extends Model
         'title', 'content', 'user_id'
     ];
 
+    protected $casts = [
+        'user_id' => 'integer'
+    ];
+
     /**
      * @return BelongsTo
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
