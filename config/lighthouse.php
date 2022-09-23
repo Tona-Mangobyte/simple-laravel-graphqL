@@ -35,7 +35,7 @@ return [
             \Nuwave\Lighthouse\Support\Http\Middleware\AttemptAuthentication::class,
 
             // Logs every incoming GraphQL query.
-            // \Nuwave\Lighthouse\Support\Http\Middleware\LogGraphQLQueries::class,
+            \Nuwave\Lighthouse\Support\Http\Middleware\LogGraphQLQueries::class,
         ],
 
         /*
@@ -69,7 +69,7 @@ return [
     */
 
     'schema' => [
-        'register' => base_path('graphql/schema-back.graphql'),
+        'register' => base_path('graphql/schema.graphql'),
     ],
 
     /*
