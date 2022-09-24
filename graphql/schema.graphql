@@ -1,6 +1,18 @@
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 #directive @paginate  on FIELD_DEFINITION
 
+input CreateUserInput {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input CreateArticleInput {
+    title: String!
+    content: String!
+    userId: Int!
+}
+
 type User {
   id: ID!
   name: String!
@@ -39,6 +51,9 @@ type Query {
 }
 
 type Mutation {
-    createArticle(title: String!, content: String!, user_id: Int!): Article!
+    createArticle(input: CreateArticleInput): Article!
     createArticle2(title: String!, content: String!, user_id: Int!): Article! @create
+
+    createUser(input: CreateUserInput! @spread): User
+    createUser2(input: CreateUserInput! @spread): User @create
 }
