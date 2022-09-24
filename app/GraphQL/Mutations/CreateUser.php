@@ -14,10 +14,11 @@ final class CreateUser
     public function __invoke($_, array $userReq)
     {
         Log::debug('user created');
+        Log::info(json_encode($userReq));
         $user = new User;
-        $user['name'] = $userReq['name'];
-        $user['email'] = $userReq['email'];
-        $user['password'] = bcrypt($userReq['password']);
+        $user['name'] = $userReq['input']['name'];
+        $user['email'] = $userReq['input']['email'];
+        $user['password'] = bcrypt($userReq['input']['password']);
         $user->save();
         return $user;
     }

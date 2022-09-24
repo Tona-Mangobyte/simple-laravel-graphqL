@@ -41,4 +41,25 @@ class ArticleTest extends TestCase
         $this->assertEquals("Tre Green DDS", $articles[0]['author']['name']);
     }
 
+    /** @test */
+    public function testCreateArticle(): void {
+        $response = $this->graphQL('
+        mutation($title: String!, $content: String!, $userId: Int!) {
+           createArticle(input:{title: $title, content: $content, userId: $userId}){
+                 id
+                 title,
+                 content,
+                 user_id
+           }
+        }',[
+            'title' => "simple new title",
+            'content' => "simple-new content",
+            'userId' => 1
+        ]);
+        $article = $response['data']['createArticle'];
+        $this->assertEquals("simple new title", $article['title']);
+        $this->assertEquals("simple-new content", $article['content']);
+        $this->assertEquals(1, $article['user_id']);
+    }
+
 }

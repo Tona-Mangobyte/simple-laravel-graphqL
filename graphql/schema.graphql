@@ -54,6 +54,7 @@ type Mutation {
     createArticle(input: CreateArticleInput): Article!
     createArticle2(title: String!, content: String!, user_id: Int!): Article! @create
 
-    createUser(input: CreateUserInput! @spread): User
+    createUser(input: CreateUserInput!): User
+    createUser3(input: CreateUserInput! @spread): User
     createUser2(input: CreateUserInput! @spread): User @create
 }
