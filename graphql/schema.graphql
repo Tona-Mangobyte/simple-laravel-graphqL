@@ -1,11 +1,12 @@
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
-directive @paginate  on FIELD_DEFINITION
+#directive @paginate  on FIELD_DEFINITION
 
 type User {
   id: ID!
   name: String!
   email: String!
 }
+
 type Article {
     id: ID!
     title: String!
@@ -26,11 +27,12 @@ type ArticlePaginator {
 
 type Query {
     me: User
-    users: [User!]!
-    userById(id: ID): User
+    users: [User!]! @all
+    userById(id: ID! @eq): User @find
 
     article(id: ID! @eq): Article @find
-    #articles(first: Int!, page: Int): ArticlePaginator @paginate
+    articlesByPage(first: Int!, page: Int): ArticlePaginator! @paginate(model: "App\\Models\\Article")
+    articles: [Article!]! @all
 
     greet(name: String = "Tona"): [String!]
     hello: [String!]
