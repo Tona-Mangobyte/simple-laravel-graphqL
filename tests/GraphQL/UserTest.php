@@ -95,4 +95,41 @@ class UserTest extends TestCase
             ]
         ]);
     }
+
+    /** @test */
+    public function testCreateUserAndDelete(): void {
+        $email = Str::random(16).'@mb.com';
+        $response = $this->graphQL('
+        mutation($name: String!, $email: String!, $password: String!) {
+           createUser(input:{name: $name, email: $email, password: $password}){
+                 id
+                 name,
+                 email
+           }
+        }',[
+            'name' => 'simple new account',
+            'email' => $email,
+            'password' => '12345'
+        ]);
+        $user = $response['data']['createUser'];
+        $this->assertEquals("simple new account", $user['name']);
+        $this->assertEquals($email, $user['email']);
+
+        // delete user
+        $userId = $user['id'];
+        $reqDelete = $this->graphQL('
+        mutation($userId: ID!) {
+           deleteUser(id: $userId){
+                 id
+                 name,
+                 email
+           }
+        }',[
+            'userId' => $userId
+        ]);
+        $userDeleted = $reqDelete['data']['deleteUser'];
+        $this->assertEquals("simple new account", $userDeleted['name']);
+        $this->assertEquals($email, $userDeleted['email']);
+        $this->assertEquals($userId, $userDeleted['id']);
+    }
 }
