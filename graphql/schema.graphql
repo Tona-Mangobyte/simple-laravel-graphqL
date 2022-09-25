@@ -40,6 +40,7 @@ type ArticlePaginator {
 type Query {
     me: User
     users: [User!]! @all
+    usersCond: [User!]! @all(scopes: ["verified"])
     userById(id: ID! @eq): User @find
 
     article(id: ID! @eq): Article @find
@@ -57,4 +58,6 @@ type Mutation {
     createUser(input: CreateUserInput!): User
     createUser3(input: CreateUserInput! @spread): User
     createUser2(input: CreateUserInput! @spread): User @create
+
+    deleteUser(id: ID!): User @delete
 }

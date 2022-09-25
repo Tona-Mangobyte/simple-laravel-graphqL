@@ -21,9 +21,10 @@ class UsersTableSeeder extends Seeder
         $password = bcrypt('secret');
 
         User::create([
-            'name'     => $faker->name,
-            'email'    => 'graphql@test.com',
+            'name'     => 'tona@mb',
+            'email'    => 'tona@mb.com',
             'password' => $password,
+            'email_verified_at' => now()
         ]);
 
         for ($i = 0; $i < 10; ++$i) {

@@ -18,8 +18,23 @@ class UserTest extends TestCase
         }');
         $users = $response['data']['users'];
         $this->assertEquals(1, $users[0]['id']);
-        $this->assertEquals("Tre Green DDS", $users[0]['name']);
-        $this->assertEquals("graphql@test.com", $users[0]['email']);
+        $this->assertEquals("tona@mb", $users[0]['name']);
+        $this->assertEquals("tona@mb.com", $users[0]['email']);
+    }
+
+    /** @test */
+    public function testUsersListConditions(): void {
+        $response = $this->graphQL('{
+            usersCond{
+               id,
+               name,
+               email
+            }
+        }');
+        $users = $response['data']['usersCond'];
+        $this->assertEquals(1, $users[0]['id']);
+        $this->assertEquals("tona@mb", $users[0]['name']);
+        $this->assertEquals("tona@mb.com", $users[0]['email']);
     }
 
     /** @test */
@@ -33,13 +48,13 @@ class UserTest extends TestCase
         }');
         $user = $response['data']['userById'];
         $this->assertEquals(1, $user['id']);
-        $this->assertEquals("Tre Green DDS", $user['name']);
-        $this->assertEquals("graphql@test.com", $user['email']);
+        $this->assertEquals("tona@mb", $user['name']);
+        $this->assertEquals("tona@mb.com", $user['email']);
     }
 
     /** @test */
     public function testCreateUser(): void {
-        $email = Str::random(16);
+        $email = Str::random(16).'@mb.com';
         $response = $this->graphQL('
         mutation($name: String!, $email: String!, $password: String!) {
            createUser(input:{name: $name, email: $email, password: $password}){
@@ -52,8 +67,32 @@ class UserTest extends TestCase
             'email' => $email,
             'password' => '12345'
         ]);
-        $article = $response['data']['createUser'];
-        $this->assertEquals("simple new account", $article['name']);
-        $this->assertEquals($email, $article['email']);
+        $user = $response['data']['createUser'];
+        $this->assertEquals("simple new account", $user['name']);
+        $this->assertEquals($email, $user['email']);
+    }
+
+    /** @test */
+    public function testCreateUser2(): void {
+        $email = Str::random(16).'@mb.com';
+        $this->graphQL('
+        mutation($name: String!, $email: String!, $password: String!) {
+           createUser(input:{name: $name, email: $email, password: $password}){
+                 id
+                 name,
+                 email
+           }
+        }',[
+            'name' => 'simple new account',
+            'email' => $email,
+            'password' => '12345'
+        ])->assertJson([
+            'data' => [
+                'createUser' => [
+                    'name' => 'simple new account',
+                    'email' => $email
+                ]
+            ]
+        ]);
     }
 }

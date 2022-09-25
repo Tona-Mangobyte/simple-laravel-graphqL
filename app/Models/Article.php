@@ -26,7 +26,7 @@ class Article extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
