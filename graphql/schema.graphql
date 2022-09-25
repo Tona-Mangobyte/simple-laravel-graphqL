@@ -38,7 +38,8 @@ type ArticlePaginator {
 }
 
 type Query {
-    me: User
+    profile: User! @guard
+    me: User @auth
     users: [User!]! @all
     usersCond: [User!]! @all(scopes: ["verified"])
     userById(id: ID! @eq): User @find
@@ -52,6 +53,11 @@ type Query {
 }
 
 type Mutation {
+    "Log in to a new session and get the user."
+    login(email: String!, password: String!): User!
+    "Log out from the current session, showing the user one last time."
+    logout: User @guard
+
     createArticle(input: CreateArticleInput): Article!
     createArticle2(title: String!, content: String!, user_id: Int!): Article! @create
 
