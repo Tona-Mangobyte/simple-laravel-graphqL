@@ -24,7 +24,7 @@ type Article {
     title: String!
     content: String!
     user_id: Int!
-    author: User! @belongsTo(relation: "user")
+    author: User! @belongsTo(relation: "author")
 }
 
 type PaginatorInfo {

@@ -22,6 +22,11 @@ class ArticlesTableSeeder extends Seeder
 
         $faker = Factory::create();
 
+        Article::create([
+            'user_id' => 1,
+            'title'   => 'simple-new title',
+            'content' => 'simple-new content',
+        ]);
         User::all()->each(function ($user) use ($faker) {
             foreach (range(1, 5) as $i) {
                 Article::create([

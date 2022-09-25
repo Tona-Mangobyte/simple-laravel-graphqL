@@ -18,7 +18,7 @@ class ArticleTest extends TestCase
         }');
         $article = $response['data']['article'];
         $this->assertEquals(1, $article['id']);
-        $this->assertEquals("Sint qui officiis veritatis.", $article['title']);
+        $this->assertEquals("simple-new title", $article['title']);
     }
 
     /** @test */
@@ -35,10 +35,10 @@ class ArticleTest extends TestCase
         }');
         $articles = $response['data']['articles'];
         $this->assertEquals(1, $articles[0]['id']);
-        $this->assertEquals("Sint qui officiis veritatis.", $articles[0]['title']);
+        $this->assertEquals("simple-new title", $articles[0]['title']);
 
         $this->assertEquals(1, $articles[0]['author']['id']);
-        $this->assertEquals("Tre Green DDS", $articles[0]['author']['name']);
+        $this->assertEquals("tona@mb", $articles[0]['author']['name']);
     }
 
     /** @test */
